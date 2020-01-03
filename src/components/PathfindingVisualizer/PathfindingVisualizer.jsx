@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import Node from "./Node/Node";
 
 const PathfindingVisualizer = () => {
-  return <h1>Hello!</h1>;
+  return <Node />;
 };
 
 export default PathfindingVisualizer;
