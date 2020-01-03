@@ -14,20 +14,20 @@ const GridNode = styled.div`
   flex-direction: row;
 `;
 
-const PathfindingVisualizer = () => {
+const PathfindingVisualizer = ({ rows, cols }) => {
   const [nodesCount, setNodes] = useState([]);
 
   useEffect(() => {
     const nodes = [];
-    for (let row = 0; row < 20; row++) {
+    for (let row = 0; row < rows; row++) {
       const currentRow = [];
-      for (let col = 0; col < 50; col++) {
+      for (let col = 0; col < cols; col++) {
         currentRow.push([]);
       }
       nodes.push(currentRow);
     }
     setNodes({ nodes });
-  }, []);
+  }, [rows, cols]);
 
   return (
     <GridWrapper>
