@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Node from "./Node/Node";
 
 const GridWrapper = styled.div`
@@ -46,6 +47,11 @@ const PathfindingVisualizer = ({ rows, cols }) => {
       )}
     </GridWrapper>
   );
+};
+
+PathfindingVisualizer.propTypes = {
+  rows: PropTypes.number.isRequired,
+  cols: PropTypes.number.isRequired
 };
 
 export default PathfindingVisualizer;
