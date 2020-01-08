@@ -22,7 +22,14 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     for (let row = 0; row < rows; row++) {
       const currentRow = [];
       for (let col = 0; col < cols; col++) {
-        currentRow.push([]);
+        const currentNode = {
+          col,
+          row,
+          isStart: row === 10 && col === 5,
+          isFinish: row === 10 && col === 45
+        };
+
+        currentRow.push(currentNode);
       }
       nodes.push(currentRow);
     }
@@ -35,9 +42,10 @@ const PathfindingVisualizer = ({ rows, cols }) => {
         nodesCount.nodes.map((row, rowIdx) => {
           return (
             <GridNode key={rowIdx}>
-              {row.map((node, nodeIdx) => (
-                <Node key={nodeIdx} />
-              ))}
+              {row.map((node, nodeIdx) => {
+                const { isStart, isFinish } = node;
+                return <Node isStart={isStart} isFinish={isFinish} key={nodeIdx} />;
+              })}
             </GridNode>
           );
         })
