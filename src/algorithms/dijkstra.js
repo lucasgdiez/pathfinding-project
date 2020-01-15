@@ -5,8 +5,33 @@
 
 export default function dijkstra(grid, startNode, finishNode) {
   const visitedNodesInOrder = [];
-  // startNode.distance = 0;
+  startNode.distance = 0;
   const unvisitedNodes = getAllNodes(grid);
+
+  //recursion loop
+  while (!!unvisitedNodes.length) {
+    const closestNode = unvisitedNodes.shift();
+
+    //if we encounter a wall, we should skip it.
+    if (closestNode.isWall) {
+      continue;
+    }
+
+    //if the closest node is at a distance of infinity
+    //we must be trapped / out of reach, so we should stop the algorithm and return the visited nodes.
+    if (closestNode.distance === Infinity) {
+      return visitedNodesInOrder;
+    }
+
+    //otherwise, we mark the current node as visited
+    closestNode.isVisited = true;
+    visitedNodesInOrder.push(closestNode);
+
+    if (closestNode === finishNode) {
+      return visitedNodesInOrder;
+    }
+    updateUnvisitedNeighbors(closestNode, grid);
+  }
 }
 
 function getAllNodes(grid) {
@@ -20,3 +45,5 @@ function getAllNodes(grid) {
 
   return nodes;
 }
+
+function updateNeighbors(closestNode, grid) {}
