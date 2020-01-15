@@ -3,4 +3,20 @@
 // previous node, effectively allowing us to compute the shortest path
 // by backtracking from the finish node.
 
-export function dijkstra(grid, startNode, finishNode) {}
+export default function dijkstra(grid, startNode, finishNode) {
+  const visitedNodesInOrder = [];
+  // startNode.distance = 0;
+  const unvisitedNodes = getAllNodes(grid);
+}
+
+function getAllNodes(grid) {
+  const nodes = [];
+
+  for (const row of grid) {
+    for (const node of row) {
+      nodes.push(node);
+    }
+  }
+
+  return nodes;
+}
