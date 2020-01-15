@@ -10,19 +10,17 @@ export default function dijkstra(grid, startNode, finishNode) {
 
   //recursion loop
   while (!!unvisitedNodes.length) {
+    sortNodesByDistance(unvisitedNodes);
     const closestNode = unvisitedNodes.shift();
-
     //if we encounter a wall, we should skip it.
     if (closestNode.isWall) {
       continue;
     }
-
     //if the closest node is at a distance of infinity
     //we must be trapped / out of reach, so we should stop the algorithm and return the visited nodes.
     if (closestNode.distance === Infinity) {
       return visitedNodesInOrder;
     }
-
     //otherwise, we mark the current node as visited
     closestNode.isVisited = true;
     visitedNodesInOrder.push(closestNode);
@@ -30,8 +28,15 @@ export default function dijkstra(grid, startNode, finishNode) {
     if (closestNode === finishNode) {
       return visitedNodesInOrder;
     }
+
     updateUnvisitedNeighbors(closestNode, grid);
   }
+}
+
+function sortNodesByDistance(unvisitedNodes) {
+  unvisitedNodes.sort((nodeA, nodeB) => {
+    return nodeA.distance - nodeB.distance;
+  });
 }
 
 function getAllNodes(grid) {
@@ -46,4 +51,4 @@ function getAllNodes(grid) {
   return nodes;
 }
 
-function updateNeighbors(closestNode, grid) {}
+function updateUnvisitedNeighbors(closestNode, grid) {}
