@@ -3,9 +3,4 @@
 // previous node, effectively allowing us to compute the shortest path
 // by backtracking from the finish node.
 
-export function dijkstra(grid, startNode, finishNode) {
-  //checking edge case scenarios
-  if (!startNode || !finishNode || startNode === finishNode) {
-    return false;
-  }
-}
+export function dijkstra(grid, startNode, finishNode) {}
