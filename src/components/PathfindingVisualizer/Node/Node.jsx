@@ -23,7 +23,6 @@ const NodeFinish = styled(NodeElement)`
 `;
 
 const Node = ({ isStart, isFinish }) => {
-  console.log(isStart, isFinish);
   return (
     <Grid>
       {isStart === true ? <NodeStart /> : ""}

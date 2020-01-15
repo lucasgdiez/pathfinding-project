@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Node from "./Node/Node";
+import dijkstra from "../../algorithms/dijkstra";
 
 const GridWrapper = styled.div`
   width: 100%;
