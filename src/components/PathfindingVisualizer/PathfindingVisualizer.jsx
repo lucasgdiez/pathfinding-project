@@ -15,37 +15,39 @@ const GridNode = styled.div`
   flex-direction: row;
 `;
 
+const START_NODE_ROW = 10;
+const START_NODE_COL = 15;
+const FINISH_NODE_ROW = 10;
+const FINISH_NODE_COL = 35;
+
 const PathfindingVisualizer = ({ rows, cols }) => {
   const [nodesCount, setNodes] = useState([]);
 
+  //create grid on its own method odwn below
   useEffect(() => {
-    const nodes = [];
-    for (let row = 0; row < rows; row++) {
-      const currentRow = [];
-      for (let col = 0; col < cols; col++) {
-        const currentNode = {
-          col,
-          row,
-          isStart: row === 10 && col === 5,
-          isFinish: row === 10 && col === 45
-        };
-
-        currentRow.push(currentNode);
-      }
-      nodes.push(currentRow);
-    }
-    setNodes({ nodes });
+    const grid = getInitialGrid(rows, cols);
+    setNodes(grid);
   }, [rows, cols]);
 
   return (
     <GridWrapper>
-      {nodesCount.hasOwnProperty("nodes") === true ? (
-        nodesCount.nodes.map((row, rowIdx) => {
+      {nodesCount.length > 0 ? (
+        nodesCount.map((row, rowIdx) => {
           return (
             <GridNode key={rowIdx}>
               {row.map((node, nodeIdx) => {
-                const { isStart, isFinish } = node;
-                return <Node isStart={isStart} isFinish={isFinish} key={nodeIdx} />;
+                const { isStart, isFinish, distance, isVisited, isWall, previousNode } = node;
+                return (
+                  <Node
+                    isStart={isStart}
+                    isFinish={isFinish}
+                    distance={distance}
+                    isVisited={isVisited}
+                    isWall={isWall}
+                    previousNode={previousNode}
+                    key={nodeIdx}
+                  />
+                );
               })}
             </GridNode>
           );
@@ -55,6 +57,32 @@ const PathfindingVisualizer = ({ rows, cols }) => {
       )}
     </GridWrapper>
   );
+};
+
+const getInitialGrid = (rows, cols) => {
+  const grid = [];
+  for (let row = 0; row < rows; row++) {
+    const currentRow = [];
+    for (let col = 0; col < cols; col++) {
+      currentRow.push(createNode(col, row));
+    }
+    grid.push(currentRow);
+  }
+  return grid;
+};
+
+//HARDCODED START / END NODE, REFACTORL LATER
+const createNode = (col, row) => {
+  return {
+    col,
+    row,
+    isStart: row === START_NODE_ROW && col === START_NODE_COL,
+    isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+    distance: Infinity,
+    isVisited: false,
+    isWall: false,
+    previousNode: null
+  };
 };
 
 PathfindingVisualizer.propTypes = {
