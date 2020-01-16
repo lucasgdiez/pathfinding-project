@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Node from "./Node/Node";
-import dijkstra from "../../algorithms/dijkstra";
+import { dijkstra, getNodesInShortestPathOrder } from "../../algorithms/dijkstra";
 
 const GridWrapper = styled.div`
   width: 100%;
@@ -30,8 +30,23 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     setNodes(grid);
   }, [rows, cols]);
 
+  const visualizeDjikstra = () => {
+    const grid = nodesCount;
+    const startNode = nodesCount[START_NODE_ROW][START_NODE_COL];
+    const finishNode = nodesCount[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedInOrder = dijkstra(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+
+    console.log(visitedInOrder);
+    console.log(nodesInShortestPathOrder);
+  };
+
   return (
     <GridWrapper>
+      <button
+        onClick={() => {
+          visualizeDjikstra();
+        }}></button>
       {nodesCount.length > 0 ? (
         nodesCount.map((row, rowIdx) => {
           return (
