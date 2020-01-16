@@ -3,7 +3,7 @@
 // previous node, effectively allowing us to compute the shortest path
 // by backtracking from the finish node.
 
-export default function dijkstra(grid, startNode, finishNode) {
+export function dijkstra(grid, startNode, finishNode) {
   const visitedNodesInOrder = [];
   startNode.distance = 0;
   const unvisitedNodes = getAllNodes(grid);
@@ -68,7 +68,7 @@ function getUnvisitedNeighbors(node, grid) {
   if (col > 0) neighbors.push(grid[row][col - 1]);
   if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
 
-  return neighbors.filter((neighbor) => !neighbors.isVisited);
+  return neighbors.filter((neighbor) => !neighbor.isVisited);
 }
 
 export function getNodesInShortestPathOrder(finishNode) {
@@ -76,7 +76,7 @@ export function getNodesInShortestPathOrder(finishNode) {
 
   let currentNode = finishNode;
 
-  while (currentNodee !== null) {
+  while (currentNode !== null) {
     nodesInShortOrder.unshift(currentNode);
     currentNode = currentNode.previousNode;
   }
