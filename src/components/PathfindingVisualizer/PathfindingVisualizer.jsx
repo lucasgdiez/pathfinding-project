@@ -30,15 +30,44 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     setNodes(grid);
   }, [rows, cols]);
 
+  const animateDijkstra = (nodes) => {
+    // nodes.forEach((node, index) => {
+    //   setTimeout(() => {
+    //     const newGrid = nodesCount.slice();
+    //     const newNode = {
+    //       ...node,
+    //       isVisited: true
+    //     };
+
+    //     newGrid[node.row][node.col] = newNode;
+    //     setNodes(newGrid);
+    //   }, 150 * index);
+    // });
+
+    for (let i = 0; i < nodes.length; i++) {
+      setTimeout(() => {
+        const node = nodes[i];
+        console.log(node);
+        const newGrid = nodesCount.slice();
+        const newNode = {
+          ...node,
+          isVisited: true
+        };
+
+        newGrid[node.row][node.col] = newNode;
+        setNodes(newGrid);
+        console.log("setted new node");
+      }, 1000 * i);
+    }
+  };
+
   const visualizeDjikstra = () => {
     const grid = nodesCount;
     const startNode = nodesCount[START_NODE_ROW][START_NODE_COL];
     const finishNode = nodesCount[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-
-    console.log(visitedInOrder);
-    console.log(nodesInShortestPathOrder);
+    animateDijkstra(visitedInOrder);
   };
 
   return (
@@ -46,7 +75,9 @@ const PathfindingVisualizer = ({ rows, cols }) => {
       <button
         onClick={() => {
           visualizeDjikstra();
-        }}></button>
+        }}>
+        Visualize Djikstra
+      </button>
       {nodesCount.length > 0 ? (
         nodesCount.map((row, rowIdx) => {
           return (
