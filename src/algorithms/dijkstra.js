@@ -22,13 +22,14 @@ export function dijkstra(grid, startNode, finishNode) {
       return visitedNodesInOrder;
     }
     //otherwise, we mark the current node as visited
+
     closestNode.isVisited = true;
+
     visitedNodesInOrder.push(closestNode);
 
     if (closestNode === finishNode) {
       return visitedNodesInOrder;
     }
-
     updateUnvisitedNeighbors(closestNode, grid);
   }
 }
