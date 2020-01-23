@@ -23,7 +23,6 @@ const FINISH_NODE_COL = 35;
 
 const PathfindingVisualizer = ({ rows, cols }) => {
   const [nodesCount, setNodes] = useState([]);
-
   //create grid on its own method odwn below
   useEffect(() => {
     const grid = getInitialGrid(rows, cols);
@@ -31,33 +30,18 @@ const PathfindingVisualizer = ({ rows, cols }) => {
   }, [rows, cols]);
 
   const animateDijkstra = (nodes) => {
-    // nodes.forEach((node, index) => {
-    //   setTimeout(() => {
-    //     const newGrid = nodesCount.slice();
-    //     const newNode = {
-    //       ...node,
-    //       isVisited: true
-    //     };
-
-    //     newGrid[node.row][node.col] = newNode;
-    //     setNodes(newGrid);
-    //   }, 150 * index);
-    // });
-
     for (let i = 0; i < nodes.length; i++) {
       setTimeout(() => {
         const node = nodes[i];
-        console.log(node);
         const newGrid = nodesCount.slice();
         const newNode = {
           ...node,
-          isVisited: true
+          isVisitedStyle: true
         };
 
         newGrid[node.row][node.col] = newNode;
         setNodes(newGrid);
-        console.log("setted new node");
-      }, 1000 * i);
+      }, 100 * i);
     }
   };
 
@@ -83,13 +67,22 @@ const PathfindingVisualizer = ({ rows, cols }) => {
           return (
             <GridNode key={rowIdx}>
               {row.map((node, nodeIdx) => {
-                const { isStart, isFinish, distance, isVisited, isWall, previousNode } = node;
+                const {
+                  isStart,
+                  isFinish,
+                  distance,
+                  isVisited,
+                  isVisitedStyle,
+                  isWall,
+                  previousNode
+                } = node;
                 return (
                   <Node
                     isStart={isStart}
                     isFinish={isFinish}
                     distance={distance}
                     isVisited={isVisited}
+                    isVisitedStyle={isVisitedStyle}
                     isWall={isWall}
                     previousNode={previousNode}
                     key={nodeIdx}
@@ -127,6 +120,7 @@ const createNode = (col, row) => {
     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
     distance: Infinity,
     isVisited: false,
+    isVisitedStyle: false,
     isWall: false,
     previousNode: null
   };

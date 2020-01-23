@@ -26,12 +26,12 @@ const NodeVisited = styled(NodeElement)`
   background-color: pink;
 `;
 
-const Node = ({ isStart, isFinish, isVisited }) => {
+const Node = ({ isStart, isFinish, isVisitedStyle }) => {
   return (
     <Grid>
       {isStart === true ? <NodeStart /> : ""}
       {isFinish === true ? <NodeFinish /> : ""}
-      {isVisited === true ? <NodeVisited /> : ""}
+      {isVisitedStyle === true ? <NodeVisited /> : ""}
     </Grid>
   );
 };
@@ -39,7 +39,7 @@ const Node = ({ isStart, isFinish, isVisited }) => {
 Node.propTypes = {
   isStart: PropTypes.bool,
   isFinish: PropTypes.bool,
-  isVisited: PropTypes.bool
+  isVisitedStyle: PropTypes.bool
 };
 
 export default Node;
