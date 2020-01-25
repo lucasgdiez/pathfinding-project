@@ -23,6 +23,7 @@ const FINISH_NODE_COL = 35;
 
 const PathfindingVisualizer = ({ rows, cols }) => {
   const [nodesCount, setNodes] = useState([]);
+  const [mouseIsPressed, setMousePressed] = useState(false);
   //create grid on its own method odwn below
   useEffect(() => {
     const grid = getInitialGrid(rows, cols);
@@ -57,6 +58,7 @@ const PathfindingVisualizer = ({ rows, cols }) => {
   const handleMouseDown = (row, col) => {
     const newGrid = getNewGridWithWallToggled(nodesCount, row, col);
   };
+
   const handleMouseEnter = (row, col) => {};
   const handleMouseUp = () => {};
 
