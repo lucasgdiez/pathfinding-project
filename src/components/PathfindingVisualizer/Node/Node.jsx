@@ -26,7 +26,16 @@ const NodeVisited = styled(NodeElement)`
   background-color: pink;
 `;
 
-const Node = ({ isStart, isFinish, isVisitedStyle, row, col }) => {
+const Node = ({
+  isStart,
+  isFinish,
+  isVisitedStyle,
+  row,
+  col,
+  onMouseDown,
+  onMouseEnter,
+  onMouseUp
+}) => {
   return (
     <Grid
       onMouseDown={() => onMouseDown(row, col)}
@@ -44,7 +53,10 @@ Node.propTypes = {
   isFinish: PropTypes.bool,
   isVisitedStyle: PropTypes.bool,
   col: PropTypes.number.isRequired,
-  row: PropTypes.number.isRequired
+  row: PropTypes.number.isRequired,
+  onMouseDown: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseUp: PropTypes.func
 };
 
 export default Node;
