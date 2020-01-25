@@ -54,6 +54,10 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     animateDijkstra(visitedInOrder);
   };
 
+  const handeMouseDown = () => {};
+  const handeMouseEnter = () => {};
+  const handeMouseUp = () => {};
+
   return (
     <GridWrapper>
       <button
@@ -128,6 +132,17 @@ const createNode = (col, row) => {
     isWall: false,
     previousNode: null
   };
+};
+
+const getNewGridWithWallToggled = (grid, row, col) => {
+  const newGrid = grid.slice();
+  const node = grid[row][col];
+  const newNode = {
+    ...node,
+    isWall: !node.isWall
+  };
+  newGrid[row][col] = newNode;
+  return newGrid;
 };
 
 PathfindingVisualizer.propTypes = {
