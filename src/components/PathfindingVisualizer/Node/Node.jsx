@@ -28,7 +28,10 @@ const NodeVisited = styled(NodeElement)`
 
 const Node = ({ isStart, isFinish, isVisitedStyle, row, col }) => {
   return (
-    <Grid>
+    <Grid
+      onMouseDown={() => onMouseDown(row, col)}
+      onMouseEnter={() => onMouseEnter(row, col)}
+      onMouseUp={() => onMouseUp()}>
       {isStart === true ? <NodeStart /> : ""}
       {isFinish === true ? <NodeFinish /> : ""}
       {isVisitedStyle === true ? <NodeVisited /> : ""}
