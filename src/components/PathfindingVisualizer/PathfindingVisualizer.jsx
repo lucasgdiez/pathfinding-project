@@ -54,7 +54,9 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     animateDijkstra(visitedInOrder);
   };
 
-  const handleMouseDown = (row, col) => {};
+  const handleMouseDown = (row, col) => {
+    const newGrid = getNewGridWithWallToggled(nodesCount, row, col);
+  };
   const handleMouseEnter = (row, col) => {};
   const handleMouseUp = () => {};
 
