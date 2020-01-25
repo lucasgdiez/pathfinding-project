@@ -74,7 +74,9 @@ const PathfindingVisualizer = ({ rows, cols }) => {
                   isVisited,
                   isVisitedStyle,
                   isWall,
-                  previousNode
+                  previousNode,
+                  col,
+                  row
                 } = node;
                 return (
                   <Node
@@ -85,6 +87,8 @@ const PathfindingVisualizer = ({ rows, cols }) => {
                     isVisitedStyle={isVisitedStyle}
                     isWall={isWall}
                     previousNode={previousNode}
+                    col={col}
+                    row={row}
                     key={nodeIdx}
                   />
                 );
