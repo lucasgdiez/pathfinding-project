@@ -106,6 +106,10 @@ const PathfindingVisualizer = ({ rows, cols }) => {
                     col={col}
                     row={row}
                     key={nodeIdx}
+                    mouseIsPressed={mouseIsPressed}
+                    onMouseDown={(row, col) => handleMouseDown(row, col)}
+                    onMouseEnter={(row, col) => handleMouseEnter(row, col)}
+                    onMouseUp={() => handleMouseUp()}
                   />
                 );
               })}
