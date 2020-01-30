@@ -26,12 +26,31 @@ const NodeVisited = styled(NodeElement)`
   background-color: pink;
 `;
 
-const Node = ({ isStart, isFinish, isVisitedStyle, row, col }) => {
+const NodeIsWall = styled(NodeElement)`
+  background-color: #d291bc;
+`;
+
+const Node = ({
+  isStart,
+  isFinish,
+  isVisitedStyle,
+  isWall,
+  row,
+  col,
+  onMouseDown,
+  onMouseEnter,
+  onMouseUp
+}) => {
   return (
-    <Grid>
+    <Grid
+      id={`row-${row} col-${col}`}
+      onMouseDown={() => onMouseDown(row, col)}
+      onMouseEnter={() => onMouseEnter(row, col)}
+      onMouseUp={() => onMouseUp()}>
       {isStart === true ? <NodeStart /> : ""}
       {isFinish === true ? <NodeFinish /> : ""}
       {isVisitedStyle === true ? <NodeVisited /> : ""}
+      {isWall === true ? <NodeIsWall /> : ""}
     </Grid>
   );
 };
@@ -40,8 +59,12 @@ Node.propTypes = {
   isStart: PropTypes.bool,
   isFinish: PropTypes.bool,
   isVisitedStyle: PropTypes.bool,
+  isWall: PropTypes.bool,
   col: PropTypes.number.isRequired,
-  row: PropTypes.number.isRequired
+  row: PropTypes.number.isRequired,
+  onMouseDown: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseUp: PropTypes.func
 };
 
 export default Node;

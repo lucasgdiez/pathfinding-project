@@ -16,14 +16,15 @@ const GridNode = styled.div`
   flex-direction: row;
 `;
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 15;
-const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 35;
+const START_NODE_ROW = 2;
+const START_NODE_COL = 3;
+const FINISH_NODE_ROW = 8;
+const FINISH_NODE_COL = 15;
 
 const PathfindingVisualizer = ({ rows, cols }) => {
   const [nodesCount, setNodes] = useState([]);
-  //create grid on its own method odwn below
+  const [mouseIsPressed, setMousePressed] = useState(false);
+
   useEffect(() => {
     const grid = getInitialGrid(rows, cols);
     setNodes(grid);
@@ -34,14 +35,13 @@ const PathfindingVisualizer = ({ rows, cols }) => {
       setTimeout(() => {
         const node = nodes[i];
         const newGrid = nodesCount.slice();
-        const newNode = {
-          ...node,
-          isVisitedStyle: true
-        };
 
-        newGrid[node.row][node.col] = newNode;
-        setNodes(newGrid);
-      }, 100 * i);
+        newGrid[node.row][node.col] = node;
+
+        //dont judge me, setting nodes as a state takes too much resources from react
+        //and reference wasnt working
+        document.getElementById(`row-${node.row} col-${node.col}`).style.backgroundColor = "pink";
+      }, 10 * i);
     }
   };
 
@@ -52,6 +52,21 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     const visitedInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateDijkstra(visitedInOrder);
+  };
+
+  const handleMouseDown = (row, col) => {
+    const newGrid = getNewGridWithWallToggled(nodesCount, row, col);
+    setNodes(newGrid);
+    setMousePressed(true);
+  };
+
+  const handleMouseEnter = (row, col) => {
+    if (!mouseIsPressed) return;
+    const newGrid = getNewGridWithWallToggled(nodesCount, row, col);
+    setNodes(newGrid);
+  };
+  const handleMouseUp = () => {
+    setMousePressed(false);
   };
 
   return (
@@ -67,29 +82,21 @@ const PathfindingVisualizer = ({ rows, cols }) => {
           return (
             <GridNode key={rowIdx}>
               {row.map((node, nodeIdx) => {
-                const {
-                  isStart,
-                  isFinish,
-                  distance,
-                  isVisited,
-                  isVisitedStyle,
-                  isWall,
-                  previousNode,
-                  col,
-                  row
-                } = node;
+                const { isStart, isFinish, distance, isWall, previousNode, col, row } = node;
                 return (
                   <Node
                     isStart={isStart}
                     isFinish={isFinish}
                     distance={distance}
-                    isVisited={isVisited}
-                    isVisitedStyle={isVisitedStyle}
                     isWall={isWall}
                     previousNode={previousNode}
                     col={col}
                     row={row}
                     key={nodeIdx}
+                    mouseIsPressed={mouseIsPressed}
+                    onMouseDown={(row, col) => handleMouseDown(row, col)}
+                    onMouseEnter={(row, col) => handleMouseEnter(row, col)}
+                    onMouseUp={() => handleMouseUp()}
                   />
                 );
               })}
@@ -123,11 +130,20 @@ const createNode = (col, row) => {
     isStart: row === START_NODE_ROW && col === START_NODE_COL,
     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
     distance: Infinity,
-    isVisited: false,
-    isVisitedStyle: false,
     isWall: false,
     previousNode: null
   };
+};
+
+const getNewGridWithWallToggled = (grid, row, col) => {
+  const newGrid = grid.slice();
+  const node = grid[row][col];
+  const newNode = {
+    ...node,
+    isWall: !node.isWall
+  };
+  newGrid[row][col] = newNode;
+  return newGrid;
 };
 
 PathfindingVisualizer.propTypes = {
