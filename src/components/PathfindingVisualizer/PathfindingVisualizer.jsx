@@ -30,7 +30,7 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     setNodes(grid);
   }, [rows, cols]);
 
-  const animateDijkstra = (nodes) => {
+  const animateDijkstra = (nodes, nodesInShortestPathOrder) => {
     for (let i = 0; i < nodes.length; i++) {
       setTimeout(() => {
         const node = nodes[i];
@@ -41,7 +41,22 @@ const PathfindingVisualizer = ({ rows, cols }) => {
         //dont judge me, setting nodes as a state takes too much resources from react
         //and reference wasnt working
         document.getElementById(`row-${node.row} col-${node.col}`).style.backgroundColor = "pink";
+
+        //check for loop ending
+        if (nodes.length - 1 === i) {
+          //animate the shortest path
+          animateShortestPath(nodesInShortestPathOrder);
+        }
       }, 10 * i);
+    }
+  };
+
+  const animateShortestPath = (nodes) => {
+    for (let i = 0; i < nodes.length; i++) {
+      setTimeout(() => {
+        const node = nodes[i];
+        document.getElementById(`row-${node.row} col-${node.col}`).style.backgroundColor = "yellow";
+      }, 50 * i);
     }
   };
 
@@ -51,7 +66,7 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     const finishNode = nodesCount[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    animateDijkstra(visitedInOrder);
+    animateDijkstra(visitedInOrder, nodesInShortestPathOrder);
   };
 
   const handleMouseDown = (row, col) => {
