@@ -23,6 +23,7 @@ const FINISH_NODE_COL = 35;
 
 const PathfindingVisualizer = ({ rows, cols }) => {
   const [nodesCount, setNodes] = useState([]);
+  const [mouseIsPressed, setMousePressed] = useState(false);
   //create grid on its own method odwn below
   useEffect(() => {
     const grid = getInitialGrid(rows, cols);
@@ -52,6 +53,21 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     const visitedInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateDijkstra(visitedInOrder);
+  };
+
+  const handleMouseDown = (row, col) => {
+    const newGrid = getNewGridWithWallToggled(nodesCount, row, col);
+    setNodes(newGrid);
+    setMousePressed(true);
+  };
+
+  const handleMouseEnter = (row, col) => {
+    if (!mouseIsPressed) return;
+    const newGrid = getNewGridWithWallToggled(nodesCount, row, col);
+    setNodes(newGrid);
+  };
+  const handleMouseUp = () => {
+    setMousePressed(false);
   };
 
   return (
@@ -128,6 +144,17 @@ const createNode = (col, row) => {
     isWall: false,
     previousNode: null
   };
+};
+
+const getNewGridWithWallToggled = (grid, row, col) => {
+  const newGrid = grid.slice();
+  const node = grid[row][col];
+  const newNode = {
+    ...node,
+    isWall: !node.isWall
+  };
+  newGrid[row][col] = newNode;
+  return newGrid;
 };
 
 PathfindingVisualizer.propTypes = {
