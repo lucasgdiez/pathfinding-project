@@ -26,10 +26,15 @@ const NodeVisited = styled(NodeElement)`
   background-color: pink;
 `;
 
+const NodeIsWall = styled(NodeElement)`
+  background-color: #d291bc;
+`;
+
 const Node = ({
   isStart,
   isFinish,
   isVisitedStyle,
+  isWall,
   row,
   col,
   onMouseDown,
@@ -44,6 +49,7 @@ const Node = ({
       {isStart === true ? <NodeStart /> : ""}
       {isFinish === true ? <NodeFinish /> : ""}
       {isVisitedStyle === true ? <NodeVisited /> : ""}
+      {isWall === true ? <NodeIsWall /> : ""}
     </Grid>
   );
 };
@@ -52,6 +58,7 @@ Node.propTypes = {
   isStart: PropTypes.bool,
   isFinish: PropTypes.bool,
   isVisitedStyle: PropTypes.bool,
+  isWall: PropTypes.bool,
   col: PropTypes.number.isRequired,
   row: PropTypes.number.isRequired,
   onMouseDown: PropTypes.func,

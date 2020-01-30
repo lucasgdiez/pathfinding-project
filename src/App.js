@@ -11,7 +11,7 @@ const AppWrapper = styled.div`
 function App() {
   return (
     <AppWrapper className='App'>
-      <PathfindingVisualizer rows={20} cols={50} />
+      <PathfindingVisualizer rows={10} cols={30} />
     </AppWrapper>
   );
 }
