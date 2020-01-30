@@ -24,7 +24,7 @@ const FINISH_NODE_COL = 15;
 const PathfindingVisualizer = ({ rows, cols }) => {
   const [nodesCount, setNodes] = useState([]);
   const [mouseIsPressed, setMousePressed] = useState(false);
-  //create grid on its own method odwn below
+
   useEffect(() => {
     const grid = getInitialGrid(rows, cols);
     setNodes(grid);
@@ -35,14 +35,13 @@ const PathfindingVisualizer = ({ rows, cols }) => {
       setTimeout(() => {
         const node = nodes[i];
         const newGrid = nodesCount.slice();
-        const newNode = {
-          ...node,
-          isVisitedStyle: true
-        };
 
-        newGrid[node.row][node.col] = newNode;
-        setNodes(newGrid);
-      }, 100 * i);
+        newGrid[node.row][node.col] = node;
+
+        //dont judge me, setting nodes as a state takes too much resources from react
+        //and reference wasnt working
+        document.getElementById(`row-${node.row} col-${node.col}`).style.backgroundColor = "pink";
+      }, 10 * i);
     }
   };
 
@@ -83,24 +82,12 @@ const PathfindingVisualizer = ({ rows, cols }) => {
           return (
             <GridNode key={rowIdx}>
               {row.map((node, nodeIdx) => {
-                const {
-                  isStart,
-                  isFinish,
-                  distance,
-                  isVisited,
-                  isVisitedStyle,
-                  isWall,
-                  previousNode,
-                  col,
-                  row
-                } = node;
+                const { isStart, isFinish, distance, isWall, previousNode, col, row } = node;
                 return (
                   <Node
                     isStart={isStart}
                     isFinish={isFinish}
                     distance={distance}
-                    isVisited={isVisited}
-                    isVisitedStyle={isVisitedStyle}
                     isWall={isWall}
                     previousNode={previousNode}
                     col={col}
@@ -143,8 +130,6 @@ const createNode = (col, row) => {
     isStart: row === START_NODE_ROW && col === START_NODE_COL,
     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
     distance: Infinity,
-    isVisited: false,
-    isVisitedStyle: false,
     isWall: false,
     previousNode: null
   };
