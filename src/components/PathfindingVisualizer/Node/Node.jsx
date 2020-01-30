@@ -37,10 +37,7 @@ const Node = ({
   onMouseUp
 }) => {
   return (
-    <Grid
-      onMouseDown={() => onMouseDown(row, col)}
-      onMouseEnter={() => onMouseEnter(row, col)}
-      onMouseUp={() => onMouseUp()}>
+    <Grid>
       {isStart === true ? <NodeStart /> : ""}
       {isFinish === true ? <NodeFinish /> : ""}
       {isVisitedStyle === true ? <NodeVisited /> : ""}
@@ -53,10 +50,10 @@ Node.propTypes = {
   isFinish: PropTypes.bool,
   isVisitedStyle: PropTypes.bool,
   col: PropTypes.number.isRequired,
-  row: PropTypes.number.isRequired,
-  onMouseDown: PropTypes.func,
-  onMouseEnter: PropTypes.func,
-  onMouseUp: PropTypes.func
+  row: PropTypes.number.isRequired
+  // onMouseDown: PropTypes.func,
+  // onMouseEnter: PropTypes.func,
+  // onMouseUp: PropTypes.func
 };
 
 export default Node;
