@@ -66,7 +66,9 @@ const PathfindingVisualizer = ({ rows, cols }) => {
     const newGrid = getNewGridWithWallToggled(nodesCount, row, col);
     setNodes(newGrid);
   };
-  const handleMouseUp = () => {};
+  const handleMouseUp = () => {
+    setMousePressed(false);
+  };
 
   return (
     <GridWrapper>
