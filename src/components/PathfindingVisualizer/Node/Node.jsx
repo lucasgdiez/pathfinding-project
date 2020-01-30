@@ -43,6 +43,7 @@ const Node = ({
 }) => {
   return (
     <Grid
+      id={`row-${row} col-${col}`}
       onMouseDown={() => onMouseDown(row, col)}
       onMouseEnter={() => onMouseEnter(row, col)}
       onMouseUp={() => onMouseUp()}>
