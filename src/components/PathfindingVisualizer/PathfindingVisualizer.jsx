@@ -153,10 +153,16 @@ const createNode = (col, row) => {
 const getNewGridWithWallToggled = (grid, row, col) => {
   const newGrid = grid.slice();
   const node = grid[row][col];
-  const newNode = {
-    ...node,
-    isWall: !node.isWall
-  };
+  let newNode = { ...node };
+
+  console.log(node);
+  if (node.isStart || node.isFinish) {
+    //create component warning, update the props
+    console.log("Warning! This is the ", node.isStart ? "Start Node" : "End Node");
+  } else {
+    newNode = { ...node, isWall: !node.isWall };
+  }
+
   newGrid[row][col] = newNode;
   return newGrid;
 };
